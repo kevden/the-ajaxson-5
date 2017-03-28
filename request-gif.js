@@ -1,4 +1,7 @@
 
+var image = ["src='' alt='' >","src= '' alt=''>","src='' alt=''/>","<div>"];
+var boxnum = 0
+render();
 
 $(document).ready(function() {
     // register our function as the "callback" to be triggered by the form's submission event
@@ -19,17 +22,19 @@ function fetchAndDisplayGif(event) {
     event.preventDefault();
     
     // get the user's input text from the DOM
-    var searchQuery = ""; // TODO should be e.g. "dance"
+
+    var searchQuery = $('#form-gif-request').val(); // TODO should be e.g. "dance"
+    searchQuery += "+'Jackson'+'5'"
 
     // configure a few parameters to attach to our request
     var params = { 
         api_key: "dc6zaTOxFJmzC", 
-        tag : "" // TODO should be e.g. "jackson 5 dance"
+        tag :searchQuery // TODO should be e.g. "jackson 5 dance"
     };
     
     // make an ajax request for a random GIF
     $.ajax({
-        url: "", // TODO where should this request be sent?
+        url:  "https://api.giphy.com/v1/gifs/random",  // TODO where should this request be sent?
         data: params, // attach those extra parameters onto the request
         success: function(response) {
             // if the response comes back successfully, the code in here will execute.
@@ -39,22 +44,37 @@ function fetchAndDisplayGif(event) {
             console.log(response);
             
             // TODO
-            // 1. set the source attribute of our image to the image_url of the GIF
-            // 2. hide the feedback message and display the image
-        },
-        error: function() {
-            // if something went wrong, the code in here will execute instead of the success function
+                // 1. set the source attribute of our image to the image_url of the GIF
+                // 2. hide the feedback message and display the image
+            if ($('#captcha').val() != 5){
+                $('#feedback').attr('class', 'error')
+                              .text("No gifs for you");
+                             
+            } else{
+                image_src = 'src=' + '"' + (response.data.image_url) + '"'  + ' />';
+                image.unshift(image_src);
+                $('#feedback').text("");
+                render();
+            }
+            },
             
+        error: function() {
+                // if something went wrong, the code in here will execute instead of the success function
+                
             // give the user an error message
-            $("#feedback").text("Sorry, could not load GIF. Try again!");
+            $("#feedback").text("Sorry, could not load GIF. Try again!")
+                          .attr('class', '');
             setGifLoadedStatus(false);
         }
     });
     
     // TODO
     // give the user a "Loading..." message while they wait
+            $('#feedback').attr('class', '')
+            .text("Loading...");
+           
     
-}
+};
 
 
 /**
@@ -62,7 +82,16 @@ function fetchAndDisplayGif(event) {
  * if the GIF is loaded: displays the image and hides the feedback label
  * otherwise: hides the image and displays the feedback label
  */
+function render(){
+    $('#picdiv').empty();
+    image.pop();
+    image.forEach(function(pic){
+        boxnum += 1;
+        $('#picdiv').append('<img id="box' + (boxnum % 3 + 1) + '" ' + pic);
+    });
+};
 function setGifLoadedStatus(isCurrentlyLoaded) {
     $("#gif").attr("hidden", !isCurrentlyLoaded);
     $("#feedback").attr("hidden", isCurrentlyLoaded);
+$('form-gif-request').on(click, fetchAndDisplayGif())
 }
