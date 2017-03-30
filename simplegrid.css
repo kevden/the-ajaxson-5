@@ -5,7 +5,12 @@
 #grid {
     display: grid;
     grid-gap: 20px;
-    grid-template-areas: "header" "nav" "content";
+    grid-template-areas: 
+    grid-template-columns: auto auto auto;
+    grid template-rows: auto auto auto;
+    "header header header" 
+    "nav nav nav" 
+    "content content content";
 }
 title {
     grid-area: header;
@@ -18,25 +23,15 @@ img {
     margin: 5px;
 }
 
-#box1 {
-    grid-area: "content";
-    flex-direction: column;
-    grid-column: 2;
-    grid-row: 1;
-}
-#box2 {
-    grid-area: "content";
-    flex-direction: column;
-    grid-column: 1;
-    grid-row: 2;
-}
-#box3 {
-    grid-area: "content";
-    flex-direction: column;
-    grid-column: 3;
-    grid-row: 3;
-}
 .error {
     color: red;
     text-size: 20px;
+}
+#submitButton {
+    background-color: burlywood;
+    color: white;
+    border: none;
+}
+#submitButton {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19) ;
 }

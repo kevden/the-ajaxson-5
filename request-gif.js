@@ -51,7 +51,7 @@ function fetchAndDisplayGif(event) {
                               .text("No gifs for you");
                              
             } else{
-                image_src = 'src=' + '"' + (response.data.image_url) + '"'  + ' />';
+                var image_src = 'src=' + '"' + (response.data.image_url) + '"'  + ' />';
                 image.unshift(image_src);
                 $('#feedback').text("");
                 render();
