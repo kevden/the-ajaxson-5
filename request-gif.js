@@ -1,6 +1,5 @@
 
-var image = ["src='' alt='' >","src= '' alt=''>","src='' alt=''/>","<div>"];
-var boxnum = 0
+var image_div = '';
 render();
 
 $(document).ready(function() {
@@ -24,7 +23,7 @@ function fetchAndDisplayGif(event) {
     // get the user's input text from the DOM
 
     var searchQuery = $('#form-gif-request').val(); // TODO should be e.g. "dance"
-    searchQuery += "+'Jackson'+'5'"
+    searchQuery += "-Jackson-5"
 
     // configure a few parameters to attach to our request
     var params = { 
@@ -51,8 +50,7 @@ function fetchAndDisplayGif(event) {
                               .text("No gifs for you");
                              
             } else{
-                var image_src = 'src=' + '"' + (response.data.image_url) + '"'  + ' />';
-                image.unshift(image_src);
+                image_div = '<img class="back" src=' + '"' + (response.data.image_url) + '"'  + ' />';
                 $('#feedback').text("");
                 render();
             }
@@ -83,13 +81,10 @@ function fetchAndDisplayGif(event) {
  * otherwise: hides the image and displays the feedback label
  */
 function render(){
-    $('#picdiv').empty();
-    image.pop();
-    image.forEach(function(pic){
-        boxnum += 1;
-        $('#picdiv').append('<img id="box' + (boxnum % 3 + 1) + '" ' + pic);
-    });
-};
+    $('.box').attr('class', 'box').empty();
+    var randomID = Math.floor((Math.random() * 10) + 1);
+    $('#' + randomID).attr('class', 'box flip').append(image_div);
+}
 function setGifLoadedStatus(isCurrentlyLoaded) {
     $("#gif").attr("hidden", !isCurrentlyLoaded);
     $("#feedback").attr("hidden", isCurrentlyLoaded);

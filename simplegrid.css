@@ -2,22 +2,7 @@
     margin: auto;
     text-align: center;
 }
-#grid {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-areas: 
-    grid-template-columns: auto auto auto;
-    grid template-rows: auto auto auto;
-    "header header header" 
-    "nav nav nav" 
-    "content content content";
-}
-title {
-    grid-area: header;
-}
-form {
-    grid-area: nav;
-}
+
 img {
     background-color: silver;
     margin: 5px;
@@ -34,4 +19,53 @@ img {
 }
 #submitButton {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19) ;
+}
+#picdiv {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns:200px 200px;
+    grid-template-rows: repeat(3, 200px);
+}
+.box{
+    background-color: blue;
+    margin: 10px;
+    border-radius: 5px;
+    grid-column-end -1;
+    position: relative;
+    perspective: 200px;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+img {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.back {
+    backface-visibility: hidden;
+    transform: rotateY( 180deg );
+}
+.flip {
+    transform: rotateY(180deg);
+}
+
+@media (max-width: 450px){
+    #picdiv{
+        grid-template-columns: repeat(1, 200px);
+    }
+}
+
+@media (min-width: 800px) {
+    #picdiv{
+        grid-template-columns: repeat(4, 200px);
+    }
+}
+@media (min-width: 600px) and (max-width: 800px) {
+    #picdiv{
+        grid-template-columns: repeat(3, 200px);
+    }
 }
